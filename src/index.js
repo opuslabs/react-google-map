@@ -33,7 +33,8 @@ export default class GoogleMap extends Component {
     zoom: 8,
   }
 
-  getInitialState() {
+  constructor(props) {
+    super(props)
     const { defaultLat, defaultLng, googleMaps, zoom } = this.props
     const map = new googleMaps.Map(React.findDOMNode(this.refs.map), {
       zoom,
@@ -46,7 +47,7 @@ export default class GoogleMap extends Component {
       overviewMapControl: false,
     })
 
-    return {
+    this.state = {
       map: map,
       markers: new Map(),
     }
