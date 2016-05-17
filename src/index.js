@@ -3,6 +3,7 @@ import iconMarker from './iconMarker.svg'
 import iconTrash from './iconTrash.svg'
 
 import React, { Component, PropTypes } from 'react'
+import ReactDOM from 'react-dom'
 import googleMapsLoader from 'react-google-maps-loader'
 
 const { arrayOf, func, object, number, shape, string } = PropTypes
@@ -33,10 +34,13 @@ export default class GoogleMap extends Component {
     zoom: 8,
   }
 
-  constructor(props) {
-    super(props)
+  state = {
+    markers: new Map(),
+  }
+
+  componentDidMount(props) {
     const { defaultLat, defaultLng, googleMaps, zoom } = this.props
-    const map = new googleMaps.Map(React.findDOMNode(this.refs.map), {
+    this.map = new googleMaps.Map(ReactDOM.findDOMNode(this.refs.map), {
       zoom,
       center: new googleMaps.LatLng(defaultLat, defaultLng),
       panControl: false,
@@ -47,13 +51,6 @@ export default class GoogleMap extends Component {
       overviewMapControl: false,
     })
 
-    this.state = {
-      map: map,
-      markers: new Map(),
-    }
-  }
-
-  componentDidMount() {
     this.initMarkers()
   }
 
@@ -109,11 +106,10 @@ export default class GoogleMap extends Component {
 
   addMarker(markerId, coordinate) {
     const { googleMaps } = this.props
-    const { map } = this.state
 
     const marker = new googleMaps.Marker({
       animation: googleMaps.Animation.DROP,
-      map: map,
+      map: this.map,
       position: new googleMaps.LatLng(coordinate.latitude, coordinate.longitude),
       title: coordinate.title,
       description: coordinate.description,
@@ -138,20 +134,20 @@ export default class GoogleMap extends Component {
   removeMarker(markerId) {
 
     const { onChange } = this.props
-    const { map, markers } = this.state
+    const { markers } = this.state
     const marker = markers.get(markerId)
 
     marker.setMap(null)
     markers.delete(markerId)
 
-    onChange(this.getNewCoordinates(), map.getZoom())
+    onChange(this.getNewCoordinates(), this.map.getZoom())
   }
 
   fitBounds() {
     const { boundsOffset, googleMaps } = this.props
-    const { map, markers } = this.state
+    const { markers } = this.state
 
-    if (!map || markers.size === 0) {
+    if (!this.map || markers.size === 0) {
       return
     }
 
@@ -161,9 +157,9 @@ export default class GoogleMap extends Component {
     bounds
       .extend(new googleMaps.LatLng(center.lat() + boundsOffset, center.lng() + boundsOffset))
       .extend(new googleMaps.LatLng(center.lat() - boundsOffset, center.lng() - boundsOffset))
-    map.setCenter(center)
+    this.map.setCenter(center)
 
-    map.fitBounds(bounds)
+    this.map.fitBounds(bounds)
   }
 
   render() {
