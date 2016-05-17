@@ -22,7 +22,7 @@ module.exports = {
       { test: /\.js?$/, include: sources, loader: 'eslint' },
     ],
     loaders: [
-      { test: /\.svg$/, loader: 'file?name=[name].[ext]' },
+      { test: /\.svg$/, loader: 'file?name=lib/[name].[ext]' },
       { test: /\.js$/, include: sources, loader: 'babel' },
       { test: /\.css$/, include: sources, loader: ExtractTextPlugin.extract('style', 'css') },
     ],
