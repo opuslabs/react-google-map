@@ -1,6 +1,4 @@
 import './index.css'
-import iconMarker from './iconMarker.svg'
-import iconTrash from './iconTrash.svg'
 
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
@@ -105,7 +103,7 @@ export default class GoogleMap extends Component {
   }
 
   addMarker(markerId, coordinate) {
-    const { googleMaps } = this.props
+    const { googleMaps, markerSVG } = this.props
 
     const marker = new googleMaps.Marker({
       animation: googleMaps.Animation.DROP,
@@ -113,19 +111,11 @@ export default class GoogleMap extends Component {
       position: new googleMaps.LatLng(coordinate.latitude, coordinate.longitude),
       title: coordinate.title,
       description: coordinate.description,
-      icon: iconMarker,
-    })
-
-    googleMaps.event.addListener(marker, 'mouseover', () => {
-      marker.setIcon(iconTrash)
-    })
-
-    googleMaps.event.addListener(marker, 'mouseout', () => {
-      marker.setIcon(iconMarker)
+      icon: markerSVG,
     })
 
     googleMaps.event.addListener(marker, 'click', () => {
-      this.removeMarker(markerId)
+      debugger
     })
 
     return marker
