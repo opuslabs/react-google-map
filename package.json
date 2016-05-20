@@ -27,7 +27,7 @@
   "dependencies": {
     "react": "^0.14.3",
     "react-dom": "^0.14.2",
-    "react-google-maps-loader": "https://github.com/opuslabs/react-google-maps-loader/tarball/96a8e80cac01d8133593e24af92abd5320ba0c61",
+    "react-google-maps-loader": "https://github.com/opuslabs/react-google-maps-loader/tarball/91bde6378038c618fbb7e0e40db01b131d5412f2",
     "get-current-script": "^0.1.0"
   },
   "devDependencies": {
