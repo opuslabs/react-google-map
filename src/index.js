@@ -70,7 +70,7 @@ export default class GoogleMap extends Component {
   updateMarkers(coordinates) {
     this.addNewMarkers(coordinates)
 
-    this.props.onChange(this.getNewCoordinates(), this.state.map.getZoom())
+    this.props.onChange(this.getNewCoordinates(), this.map.getZoom())
   }
 
   addNewMarkers(coordinates) {
