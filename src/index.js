@@ -103,7 +103,7 @@ export default class GoogleMap extends Component {
   }
 
   addMarker(markerId, coordinate) {
-    const { googleMaps, markerSVG } = this.props
+    const { googleMaps } = this.props
 
     const marker = new googleMaps.Marker({
       animation: googleMaps.Animation.DROP,
@@ -111,7 +111,6 @@ export default class GoogleMap extends Component {
       position: new googleMaps.LatLng(coordinate.latitude, coordinate.longitude),
       title: coordinate.title,
       description: coordinate.description,
-      icon: markerSVG,
     })
 
     googleMaps.event.addListener(marker, 'click', () => {
